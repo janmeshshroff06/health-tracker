@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import {
   ActivityIndicator,
+  Platform,
   Pressable,
   SafeAreaView,
   ScrollView,
@@ -20,11 +21,14 @@ function MetricCard({ label, value }: { label: string; value: string }) {
     <View style={styles.card}>
       <Text style={styles.cardLabel}>{label}</Text>
       <Text style={styles.cardValue}>{value}</Text>
+      <Text style={styles.helperText}>Syncing with device health data...</Text>
     </View>
   );
 }
 
 export default function App() {
+  const healthSourceLabel =
+    Platform.OS === 'ios' ? 'Apple Health' : 'Health Connect';
   const [screenState, setScreenState] = useState<ScreenState>('loading');
   const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState<DashboardHealthData | null>(null);
@@ -70,7 +74,9 @@ export default function App() {
         {screenState === 'loading' && (
           <View style={styles.centeredBlock}>
             <ActivityIndicator size="large" />
-            <Text style={styles.helperText}>Syncing with Apple Health...</Text>
+            <Text style={styles.helperText}>
+              {`Syncing with ${healthSourceLabel}...`}
+            </Text>
           </View>
         )}
 
@@ -93,7 +99,7 @@ export default function App() {
           <View style={styles.errorBox}>
             <Text style={styles.errorTitle}>
               {screenState === 'unavailable'
-                ? 'HealthKit Unavailable'
+                ? `${healthSourceLabel} Unavailable`
                 : 'Sync Failed'}
             </Text>
             <Text style={styles.errorText}>{errorMessage}</Text>

@@ -1,3 +1,6 @@
 <resources>
     <string name="app_name">HealthApp</string>
+    <string name="health_permissions_rationale_title">Health data access</string>
+    <string name="health_permissions_rationale_body">HealthApp reads your steps, heart rate, and active calories from Health Connect so it can show your daily dashboard. We only request read access for the metrics shown in the app.</string>
+    <string name="health_permissions_rationale_close">Close</string>
 </resources>
